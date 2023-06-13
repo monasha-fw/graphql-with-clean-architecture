@@ -28,4 +28,13 @@ abstract class GraphQlQueries {
     }
   }
 ''';
+
+  /// Subscriptions
+  static const String listenToUpdates = r'''
+    subscription reviewAdded {
+      reviewAdded {
+        stars, commentary, episode
+      }
+    }
+  ''';
 }

@@ -109,7 +109,7 @@ class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
       // final QueryResult result = await _client.mutate(mutation);
 
       /// Method 2 - This is more like clean with generic _client
-      _client.subscription(GraphQlQueries.addCharacter).listen((QueryResult result) {
+      _client.subscription(GraphQlQueries.listenToUpdates).listen((QueryResult result) {
         if (result.hasException) {
           controller.add(Left(
             Failure.networkFailure(NetworkFailure.unexpectedError(result.exception.toString())),
