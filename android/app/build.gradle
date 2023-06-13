@@ -21,13 +21,34 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def flutterCompileSdkVersion = localProperties.getProperty('flutter.compileSdkVersion')?.toInteger()
+if (flutterCompileSdkVersion == null) {
+    flutterCompileSdkVersion = 33
+}
+
+def flutterTargetSdkVersion = localProperties.getProperty('flutter.targetSdkVersion')?.toInteger()
+if (flutterTargetSdkVersion == null) {
+    flutterTargetSdkVersion = 33
+}
+
+def flutterMinSdkVersion = localProperties.getProperty('flutter.minSdkVersion')?.toInteger()
+if (flutterMinSdkVersion == null) {
+    flutterMinSdkVersion = 21
+}
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     namespace "com.example.graphql_demo"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion flutterCompileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -48,8 +69,8 @@ android {
         applicationId "com.example.graphql_demo"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion flutterMinSdkVersion
+        targetSdkVersion flutterTargetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
